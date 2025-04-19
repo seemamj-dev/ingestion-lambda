@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  NewsIngestionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: com.news.ingestion.NewsIngestionHandler::handleRequest
+      Runtime: java17
+      Timeout: 15
+      MemorySize: 512
+      Policies:
+        - S3WritePolicy:
+            BucketName: news-article-storage-mjnewsgen
+      Environment:
+        Variables:
+          BUCKET_NAME: news-article-storage-mjnewsgen
